@@ -10,7 +10,6 @@ export default function LoginPage() {
   const supabase = createClientComponentClient()
   const router = useRouter()
 
-  // Esta es la sección corregida que soluciona el error de 'await'
   useEffect(() => {
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
@@ -31,7 +30,6 @@ export default function LoginPage() {
           appearance={{ theme: ThemeSupa }}
           theme="dark"
           providers={['google', 'github']}
-          redirectTo={`${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`}
         />
       </div>
     </div>
