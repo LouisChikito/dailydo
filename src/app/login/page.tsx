@@ -2,7 +2,6 @@
 'use client'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
-// ¡Ojo! Importamos de 'createClientComponentClient' para componentes de cliente
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -11,7 +10,7 @@ export default function LoginPage() {
   const supabase = createClientComponentClient()
   const router = useRouter()
 
-  // Esta es la sección corregida
+  // Esta es la sección corregida que soluciona el error de 'await'
   useEffect(() => {
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
@@ -32,8 +31,7 @@ export default function LoginPage() {
           appearance={{ theme: ThemeSupa }}
           theme="dark"
           providers={['google', 'github']}
-          // Corregimos también este redirect para que funcione en Vercel
-          redirectTo={`${window.location.origin}/auth/callback`}
+          redirectTo={`${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`}
         />
       </div>
     </div>
